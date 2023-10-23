@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import OrganizationCard from "../components/home/OrganizationCard.astro";
+import Graph from "../components/Graph.astro";
 
 const API_BASE_URL = import.meta.env.API_BASE_URL;
 const response = await fetch(`${API_BASE_URL}/orgs`);
@@ -26,6 +27,8 @@ const allOrganizations = await response.json();
       }
     </ul>
   </div>
+
+
 </Layout>
 
 <style>

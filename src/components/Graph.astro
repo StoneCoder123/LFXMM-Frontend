@@ -3,6 +3,10 @@ interface Props {
   id: number;
 }
 
+const API_BASE_URL = import.meta.env.API_BASE_URL;
+const response = await fetch(`${API_BASE_URL}/orgs/20/count`);
+console.log(API_BASE_URL);
+
 const { id } = Astro.props;
 ---
 
@@ -11,7 +15,9 @@ const { id } = Astro.props;
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"
 ></script>
 
-<script type="text/javascript">
+<script type="text/javascript" define:vars={{ response }}>
+console.log(response);
+
 function parseResponseToArray(resp) {
     const parsedRes = [["Year", "Proposals"]];
     resp.map((res) => {
@@ -26,22 +32,19 @@ function parseResponseToArray(resp) {
 }
 
 google.charts.load("current", { packages: ["corechart"] });
-const API_BASE_URL = import.meta.env.API_BASE_URL;
-// const response = fetch(`${API_BASE_URL}/orgs/20/count`);
 
 // console.log(response)
-const response = [
-    {
-        programYear: 2021,
-        count: 9,
-    },
-    {
-        programYear: 2022,
-        count: 4,
-    },
-];
+// const response = [
+//     {
+//         programYear: 2021,
+//         count: 9,
+//     },
+//     {
+//         programYear: 2022,
+//         count: 4,
+//     },
+// ];
 // response = res.json();
-console.log(response);
 
 google.charts.setOnLoadCallback(() => drawChart(response));
 
