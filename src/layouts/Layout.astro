@@ -1,6 +1,7 @@
 ---
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import Graph from "../components/Graph.astro";
 
 interface Props {
   title: string;
@@ -29,6 +30,7 @@ const { title } = Astro.props;
     <Header />
     <slot />
     <Footer />
+    <Graph id={20} />
   </body>
 </html>
 

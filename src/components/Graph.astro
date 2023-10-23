@@ -1,0 +1,65 @@
+---
+interface Props {
+  id: number;
+}
+
+const { id } = Astro.props;
+---
+
+<div id="curve_chart" style="width: 900px; height: 500px"></div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"
+></script>
+
+<script type="text/javascript">
+function parseResponseToArray(resp) {
+    const parsedRes = [["Year", "Proposals"]];
+    resp.map((res) => {
+        const temp = [];
+        temp.push(String(res.programYear));
+        temp.push(res.count);
+
+        parsedRes.push(temp);
+    });
+
+    return parsedRes;
+}
+
+google.charts.load("current", { packages: ["corechart"] });
+const API_BASE_URL = import.meta.env.API_BASE_URL;
+// const response = fetch(`${API_BASE_URL}/orgs/20/count`);
+
+// console.log(response)
+const response = [
+    {
+        programYear: 2021,
+        count: 9,
+    },
+    {
+        programYear: 2022,
+        count: 4,
+    },
+];
+// response = res.json();
+console.log(response);
+
+google.charts.setOnLoadCallback(() => drawChart(response));
+
+function drawChart(response) {
+    const parsedResponse = parseResponseToArray(response);
+    console.log(parsedResponse);
+    var data = google.visualization.arrayToDataTable(parsedResponse);
+
+    var options = {
+        title: "LFX Mentorships",
+        curveType: "function",
+        legend: { position: "bottom" },
+    };
+
+    var chart = new google.visualization.LineChart(
+        document.getElementById("curve_chart"),
+    );
+
+    chart.draw(data, options);
+}
+</script>
